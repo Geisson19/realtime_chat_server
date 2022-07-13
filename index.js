@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
+
 require('dotenv').config();
 
 // Database connection
@@ -8,6 +10,9 @@ connection();
 
 // Express instance
 const app = express();
+
+// Enable CORS
+app.use(cors());
 
 // Json reader and parser
 app.use(express.json());
