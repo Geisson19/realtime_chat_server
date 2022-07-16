@@ -47,4 +47,5 @@ router.post(
 /* This is a route for renewing the token. */
 router.get('/', validateJWT, renewToken);
 
+// Exporting the router
 module.exports = router;
