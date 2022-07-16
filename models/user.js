@@ -23,7 +23,7 @@ const UserSchema = new Schema({
 
 /* Override the method that is called when the object is converted to JSON. */
 UserSchema.methods.toJSON = function () {
-	const { __v, _id, isOnline, password, ...object } = this.toObject();
+	const { __v, _id, password, ...object } = this.toObject();
 	object.uid = _id;
 	return object;
 };
