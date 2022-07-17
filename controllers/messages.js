@@ -1,16 +1,16 @@
 const Message = require('../models/message');
 
-const getMessagesFrom = (req, res) => {
+const getMessagesFrom = async (req, res) => {
 	const myId = req.uid;
 	const from = req.params.from;
 
-	const last30messages = Message.find({
+	const last30messages = await Message.find({
 		$or: [
 			{ from: myId, to: from },
 			{ from: from, to: myId },
 		],
 	})
-		.sort({ createdAt: 1 })
+		.sort({ createdAt: 'desc' })
 		.limit(30);
 
 	res.json({

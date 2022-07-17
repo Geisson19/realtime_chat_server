@@ -20,4 +20,10 @@ const MessageSchema = new Schema(
 	{ timestamps: true }
 );
 
+/* Override the method that is called when the object is converted to JSON. */
+MessageSchema.methods.toJSON = function () {
+	const { __v, _id, ...object } = this.toObject();
+	return object;
+};
+
 module.exports = model('Message', MessageSchema);
