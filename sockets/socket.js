@@ -5,15 +5,22 @@ const { connectedUser, disconnectedUser } = require('../controllers/socket');
 
 // Mensajes de Sockets
 io.on('connection', client => {
-	console.log('Cliente conectado');
-
 	const clientToken = client.handshake.headers['x-token'];
 
 	const [isValid, uid] = verifyJWT(clientToken);
 
 	if (!isValid) return client.disconnect(true);
 
-	const user = connectedUser(uid);
+	connectedUser(uid);
+
+	// Join user to room
+	client.join(uid);
+
+	// Get message from client
+	client.on('send-message', payload => {
+		console.log(payload);
+		io.to(payload.to).emit('send-message', payload);
+	});
 
 	client.on('disconnect', () => {
 		console.log('Cliente desconectado');
