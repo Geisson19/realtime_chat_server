@@ -1,7 +1,11 @@
 const { io } = require('../index');
 
 const { verifyJWT } = require('../helpers/jwt');
-const { connectedUser, disconnectedUser } = require('../controllers/socket');
+const {
+	connectedUser,
+	disconnectedUser,
+	saveMessage,
+} = require('../controllers/socket');
 
 // Mensajes de Sockets
 io.on('connection', client => {
@@ -18,7 +22,7 @@ io.on('connection', client => {
 
 	// Get message from client
 	client.on('send-message', payload => {
-		console.log(payload);
+		saveMessage(payload);
 		io.to(payload.to).emit('send-message', payload);
 	});
 
